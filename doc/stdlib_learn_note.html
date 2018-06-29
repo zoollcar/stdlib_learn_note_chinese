@@ -1,0 +1,159 @@
+<meta charset='utf-8' emacsmode='-*- markdown -*-'>
+<link rel='stylesheet' href='https://casual-effects.com/markdeep/latest/apidoc.css?'>
+<style>.backtick, .tilde {overflow-x: auto;} .longTOC {overflow-x: hidden;}</style>
+
+## 数据类型
+
+### size_t是sizeof关键词的值，无符号整形
+### wchar_t 宽字符类型
+### div_t与ldiv_t结构体 作为 div 的返回值
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+typedef struct {
+    int quot; // 商
+    int rem;  // 余数
+} div_t;
+//-------------------------------
+typedef struct {
+    long int quot; // 商
+    long int rem;  // 余数
+} ldiv_t;
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+## 宏
+
+### EXIT_SUCCESS 和 EXIT_FAILURE
+exit函数成功退出和失败的返回值
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+#define EXIT_SUCCESS	0
+#define EXIT_FAILURE	1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### RAND_MAX rand 函数返回的最大的数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+#define RAND_MAX	0x7FFF
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### MB_CUR_MAX 一个多字节字符的最大字节数
+头文件中的处理比较复杂
+
+## 函数
+
+### 将字符串转换为 double
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+double atof (const char *);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 将字符串转换为 int
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+int atoi (const char *);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 将字符串转换为 long int
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+long atol (const char *);
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 将以数字开头的字符串转换为 double
+str 是一个以数字开头的字符串，
+返回把 str 转换后的 double ， endptr 指向第一个不是数字的字符
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+double strtod(const char *str, char **endptr)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 将以数字开头的字符串转换为 long int
+str 是一个以数字开头的字符串，
+返回把 str 以 base 为基数（进制）转换后的 long int ，
+endptr 指向第一个不是数字的字符
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+long int strtol(const char *str, char **endptr, int base)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### str 是一个以数字开头的字符串，
+返回把 str 以 base 为基数 转换后的 unsigned long int ，
+endptr 指向第一个不是数字的字符
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+unsigned long int strtoul(const char *str, char **endptr, int base)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 分配请求的内存大小(nitems * size)并返回指向它的指针
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void *calloc(size_t nitems, size_t size)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 分配请求的内存(size)并返回指向它的指针
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void *malloc(size_t size)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 调整之前分配的内存块大小
+* ptr 执行要调整的内存块
+* size 要调整到的字节数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void *realloc(void *ptr, size_t size)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 回收先前分配的内存
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void free(void *ptr)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 搜索环境变量并返回字符串
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+char *getenv(const char *name)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 把命令(string)传递给主机由主机执行
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+int system(const char *string)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 快速排序
+* base是数组的基地址 
+* nitems是数组的元素个数 
+* size是数组元素大小
+* compar是比较函数，靠返回值正负来比较，为0的情况未定义
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void qsort(void *base, size_t nitems, size_t size,
+                int (*compar)(const void *, const void*))
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 二分查找
+* key是要查找的元素 
+* base是数组的基地址 
+* num是数组的元素个数 
+* size数组元素大小
+* cmp是比较函数，靠返回值正负来比较，数组必须是排好序的
+* 返回找到的元素的指针
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void *bsearch(const void *key, const void *base, size_t num, size_t size,
+                int (*cmp)(const void *, const void *));
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 返回x的绝对值
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+int abs(int x)
+long int labs(long int x)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 做除法，分别得到除数和被除数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+div_t div(int numer, int denom)
+ldiv_t ldiv(long int numer, long int denom)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 返回一个随机数，范围(0~RAND_MAX)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+int rand(void)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 对随机函数设置种子
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void srand(unsigned int seed)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 计算一个多字节字符的长度
+* n 是多字节字符的长度的最大值
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+int mblen(const char *str, size_t n)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 多字节字符串转换为数组
+将由参数str指向的多字节字符串转换为由pwcs指向的数组
+* n 是多字节字符的长度的最大值
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+size_t mbstowcs(schar_t *pwcs, const char *str, size_t n)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 在程序正常退出时执行 
+* func 要执行的函数
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+int atexit(void (*func)(void))
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 程序异常退出
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void abort(void)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+### 程序正常退出 ,返回给操作系统 status
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~c
+void exit(int status)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+<script>markdeepOptions={tocStyle:'long'};</script>
+<!-- Markdeep: --><script src='https://casual-effects.com/markdeep/latest/markdeep.min.js?'></script>
